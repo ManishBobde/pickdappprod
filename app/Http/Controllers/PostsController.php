@@ -36,21 +36,18 @@ class PostsController extends Controller
 
             $pageNo = $this->request->get('page');
 
-
             $categoryIds = $this->request->input('categoryId');
 
             $prevCursor = $this->request->input('prevCursor');
 
             $nextCursor = $this->request->input('nextCursor');
 
-
-
-            // dd($categoryIds);
+           // dd($categoryIds);
             //s $variable = explode(",", $categoryIds);
             $decodedPrevCursor = base64_decode($prevCursor);
             $decodedNextCursor = base64_decode($nextCursor);
 
-            var_dump($decodedPrevCursor,$decodedNextCursor);
+          //  var_dump($decodedPrevCursor,$decodedNextCursor);
 
             if ($decodedNextCursor) {
                 $posts = Post::where('created_at', '<', $decodedNextCursor)
@@ -102,9 +99,9 @@ class PostsController extends Controller
             $merged = $resource->merge(["totalCount" => $totalPosts->count()]);
             $merged = $merged->merge(["currentPage" => $lengthpage->currentPage()]);
             $merged = $merged->merge(["hasMorePages" => $lengthpage->hasMorePages()]);
+            $merged = $merged->merge(["prevUrl" => $lengthpage->appends(["prevCursor"=>$nextCursor])->previousPageUrl()]);
             $merged = $merged->merge(["nextUrl" => $lengthpage->appends(["nextCursor"=>$newCursor])->nextPageUrl()]);
 
-            $merged = $merged->merge(["prevUrl" => $lengthpage->appends(["prevCursor"=>$nextCursor])->previousPageUrl()]);
             /*$posts = Post::whereIn('categoryId', $categoryIds)
 
 				->orderBy('publishedDate','desc')
