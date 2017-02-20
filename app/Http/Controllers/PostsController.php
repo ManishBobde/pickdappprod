@@ -85,7 +85,10 @@ class PostsController extends Controller
             //dd($posts->appends(["cursor"=>$newCursor])->nextPageUrl());
 
 
+
             $lengthpage  = new Paginator($totalPosts,$pageLimit,$pageNo);
+            $lengthpage1  = new Paginator($totalPosts,$pageLimit,$pageNo);
+
             // dd($lengthpage->items());
             // $lengthpage->appends(["cursor"=>$newCursor]);
             //  var_dump($posts);
@@ -99,7 +102,7 @@ class PostsController extends Controller
             $merged = $resource->merge(["totalCount" => $totalPosts->count()]);
             $merged = $merged->merge(["currentPage" => $lengthpage->currentPage()]);
             $merged = $merged->merge(["hasMorePages" => $lengthpage->hasMorePages()]);
-            $merged = $merged->merge(["prevUrl" => $lengthpage->appends(["prevCursor"=>$nextCursor])->previousPageUrl()]);
+            $merged = $merged->merge(["prevUrl" => $lengthpage1->appends(["prevCursor"=>$nextCursor])->previousPageUrl()]);
             $merged = $merged->merge(["nextUrl" => $lengthpage->appends(["nextCursor"=>$newCursor])->nextPageUrl()]);
 
             /*$posts = Post::whereIn('categoryId', $categoryIds)
