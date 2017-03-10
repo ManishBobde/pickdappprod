@@ -14,16 +14,18 @@ class CreatePostsTable extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('postTitle');
-            $table->string('shortDescription');
-            $table->string('sourceName');
+            $table->string('title');
+            $table->string('body');
+            $table->string('sourceTitle');
             $table->string('sourceUrl');
-            $table->string('imageUrl');
+            $table->string('imageUrl')->nullable();
             $table->string('categoryId');
-            $table->string('curatorId');
-            $table->string('createdDate');
-            $table->string('publishedDate');
-            $table->boolean('isVideoPost')->default(false)	;
+            $table->string('creatorId');
+            $table->string('reviewerId');
+            $table->string('createdDate')->nullable();
+            $table->string('publishedDate')->nullable();
+            $table->timestamp('submittedDate')->nullable();
+            $table->boolean('isVideoPost')->default(false);
             $table->boolean('needsPushNotification')->default(false);
             $table->boolean('isNotificationSent')->default(false);
             $table->timestamps();
